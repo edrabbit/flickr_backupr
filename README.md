@@ -23,3 +23,6 @@ you'll have to be patient. This could probably be better optimized, but
 I figure I'll only need to run it in its entirety once so :man_shrugging
 
 Disclaimer: Not fully tested. YMMV. Please be nice to Flickr's API.
+
+This is intended for personal use. Please respect photographers and their 
+respective copyright choices.
