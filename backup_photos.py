@@ -9,7 +9,8 @@ import subprocess
 # Ex: mooflyfoof, Tahoe Cabin - Morning, Original, http://www.flickr.com/photos/49128806@N00/8522733154
 # Saved to saved/mooflyfoof/Tahoe Cabin - Morning 8522733154.jpg
 
-SAVE_PATH = "saved2"
+SAVE_PATH = "downloaded"
+TAGS_DIRECTORY_NAME = "TAGS"
 
 def save_exif(photo, saved_to_file):
     ''' Fetch the exif data and write it to the photo file
@@ -119,10 +120,30 @@ if __name__=="__main__":
 
     if not os.path.exists(SAVE_PATH):
         os.mkdir(SAVE_PATH)
+    if not os.path.exists(os.path.join(SAVE_PATH, TAGS_DIRECTORY_NAME)):
+        os.mkdir(os.path.join(SAVE_PATH, TAGS_DIRECTORY_NAME))
 
+    for tag in ["bunki", "edrabbit"]:
+        print "Getting photos with tag '%s'" % tag
+        tag_save_path = "%s/%s/%s" % (SAVE_PATH, TAGS_DIRECTORY_NAME, tag)
+        if not os.path.exists(tag_save_path):
+            os.mkdir(tag_save_path)
+        count = 0
+        for photo in get_photos_by_tag(tag):
+            save_photo(photo, tag_save_path)
+            count += 1
+            print count
+
+    print "Getting photos of currently auth'd user"
+    count = 0
     for photo in get_photos_of_user():
         save_photo(photo, SAVE_PATH)
+        count += 1
+        print count
+    print "Getting favorited photos..."
+    count = 0
     for photo in get_favorite_photos():
         save_photo(photo, SAVE_PATH)
-    for photo in get_photos_by_tag("edrabbit"):
-        save_photo(photo, SAVE_PATH)
+        count += 1
+        print count
+
